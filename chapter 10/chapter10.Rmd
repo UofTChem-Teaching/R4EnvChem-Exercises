@@ -1,0 +1,152 @@
+---
+title: 'Chapter 10: Tidying Your Data'
+output:
+  html_document:
+    df_print: paged
+---
+
+# Getting Started:
+
+## Import Data
+
+Before diving into the exercises, follow the instructions below to download a dataset from the Exploring Air Quality Data website.
+
+-   Visit the [Exploring Air Quality Data](https://uoft-chem.shinyapps.io/Air_Quality_App/) and go to `My Data` tab.
+-   Enter your student number, and then download the CSV file.
+-   Upload the file to your RStudio. 
+
+Use the `read_csv()` function from the `readr`(`tidyverse`) package to import your Air Quality dataset, and assign the imported data to a variable named `data`.
+
+```{r}
+# Complete the code below and run the cell.
+
+# Import data from CSV file using read_csv -- your code here
+data <- 
+```
+
+------------------------------------------------------------------------
+
+# Exercise 1: Making Data Longer
+
+**Your Task:**
+
+Transform the `data` to a longer format where the headers `NO2` and `O3` become values in a new column called `analyte`, and their respective values fill a new column called `concentration`. Assign the result to `longer_data`.
+
+```{r}
+# Complete the code below and run the cell.
+
+# Your code here
+longer_data <- 
+```
+
+#### Test Your Code (Exercise 1)
+
+Do not modify the cell below. 
+
+```{r}
+library(testthat, quietly = TRUE)
+test_that("Making data longer", {
+  expect_true("analyte" %in% colnames(longer_data))
+  expect_true("concentration" %in% colnames(longer_data))
+})
+
+```
+
+
+------------------------------------------------------------------------
+
+# Exercise 2: Separate Date and Time
+
+**Your Task:**
+Use the `longer_data` to separate the `Time` column into distinct `year`, `month`, `day`, and `time` columns. Assign the result to `date_time_data`. Consider using the pipe operator (`%>%`) to break down into multiple separation steps.
+
+```{r}
+# Complete the code below and run the cell.
+
+# Your code here
+date_time_data <- 
+```
+You might notice that there are NA values in the `Hour` column. Why do you think this is happening? It's okay to leave this for now, but feel free to figure out how to resolve this issue.
+
+
+#### Test Your Code (Exercise 2)
+
+Do not modify the cell below. 
+
+```{r}
+library(testthat, quietly = TRUE)
+test_that("Separate date and time", {
+  expect_true(all(c("year", "month", "day", "time") %in% colnames(date_time_data)))
+})
+```
+
+
+------------------------------------------------------------------------
+
+# Exercise 3: Uniting Columns
+
+**Your Task:**
+
+Using the `date_time_data` from the previous exercise, unite the `year`, `month`, and `day` columns into a single `date` column. Use a space as the separator. Assign the result to a variable named `united_data`.
+
+```{r}
+# Complete the code below and run the cell.
+
+# Your code here
+united_data <- 
+```
+
+
+#### Test Your Code (Exercise 3)
+
+Do not modify the cell below. 
+```{r}
+library(testthat, quietly = TRUE)
+test_that("Uniting Columns", {
+  expect_true("date" %in% colnames(united_data))
+})
+```
+
+
+------------------------------------------------------------------------
+
+# Exercise 4: Renaming Columns
+
+**Your Task:**
+
+
+Rename the `analyte` column to "pollutant" in the `united_data` dataset. Assign the result to a new variable named `renamed_data`.
+
+```{r}
+# Complete the code below and run the cell.
+
+# Your code here
+renamed_data <- 
+```
+
+
+#### Test Your Code (Exercise 4)
+
+Do not modify the cell below. 
+```{r}
+library(testthat, quietly = TRUE)
+test_that("Renaming columns", {
+  expect_true("pollutant" %in% colnames(renamed_data))s
+
+})
+
+```
+
+
+# Exercise 5: Visualization
+
+Before we finish, let's visualize the `Time`(x-axis) vs. `concentration`(y-axis) values in `longer_data`. By plotting these values, you'll get a clearer idea of any outliers or potentially erroneous data points. 
+
+
+```{r}
+# Your code for the scatterplot of Time vs Ozone before cleaning goes here.
+```
+
+Observe the plot. Do you notice any data points that seem unusual or don't fit the overall pattern, especially those with negative values? These could be indicative of measurement errors. 
+
+You will get to remove these data in the next chapter's exercise when we learn data transformation, so stay tuned!
