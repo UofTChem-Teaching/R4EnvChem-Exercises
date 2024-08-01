@@ -1,5 +1,5 @@
 ---
-title: 'Chapter 15: Common Types of Graphs'
+title: 'Chapter 15: Restructuring Your Data'
 output:
   html_document:
     df_print: paged
@@ -7,111 +7,106 @@ output:
 
 # Getting Started:
 
-For the purpose of this exercise, you will be using the Iris dataset, which is a famous and commonly used dataset in the field of data science. This dataset contains measurements of different species of iris flowers. 
+## Load Necessary Libraries
 
-The iris dataset is readily available in R and can be loaded for exploration and analysis. Here's how you can get started with the iris dataset in R:
-
-## Import Data
+Before starting the exercises, ensure you have the necessary libraries loaded:
 
 ```{r}
+# Load necessary libraries
 library(tidyverse)
-iris
 ```
 
-Take your time to look at the data!
+## Load Data
 
-The iris dataset consists of the following variables:
+For these exercises, we'll be using the `CO2` dataset from R's built-in datasets. This dataset contains information about carbon dioxide uptake in grass plants under different CO2 concentration levels and treatments.
 
--   Sepal Length: The length of the iris flower's sepal (in cm).
--   Sepal Width: The width of the iris flower's sepal.
--   Petal Length: The length of the iris flower's petal.
--   Petal Width: The width of the iris flower's petal.
--   Species: The species of the iris flower, which can be one of three types: Setosa, Versicolor, or Virginica.
+Load the dataset into your R environment:
 
+```{r}
+# Load the CO2 dataset
+data(CO2)
+```
 
 ------------------------------------------------------------------------
 
-# Exercise 1: Bar Chart of Species Counts
+# Exercise 1: Using pivot_longer
 
 **Your Task:**
 
-You have a dataset named iris that contains information about different species of iris flowers. Create a bar chart to visualize the count of each `Species`. 
-
--   Give your visualization an appropriate title.
--   Try to make each bar have different color.
--   Make sure to give axes correct labels.
+Transform the `CO2` dataset to a longer format where the columns `uptake` and `conc` become values in a new column called `measurement_type`, and their respective values are stored in a new column named `value`. Assign the result to `long_data`.
 
 ```{r}
-# Create a bar chart of species counts
+# Complete the code below and run the cell.
 
+# Your code here
+long_data <- 
 ```
 
+#### Test Your Code (Exercise 1)
 
-Your graph should look something like this:
-![](count_of_iris_species.png)
-If the picture is not rendered, visit https://github.com/UofTChem-Teaching/R4EnvChem-Exercises/blob/main/chapter%2015/count_of_iris_species.png instead.
+```{r,purl=FALSE}
+library(testthat, quietly = TRUE)
+test_that("Using pivot_longer", {
+  expect_true("measurement_type" %in% colnames(long_data))
+  expect_true("value" %in% colnames(long_data))
+})
+```
 
 ------------------------------------------------------------------------
 
-# Exercise 2: Box Plot of Sepal Length by Species
+# Exercise 2: Using pivot_wider
 
 **Your Task:**
 
-This time, create a box plot to compare the distribution of sepal length (`Sepal.Length`) for each species.
-
--   Give your visualization an appropriate title.
--   Try to make each box have different color.
--   Make sure to give axes correct labels.
+Transform the `long_data` you created in Exercise 1 back to a wider format. Ensure that each measurement type (`uptake`, `conc`) becomes its own column again. Assign the result to `wide_data`.
 
 ```{r}
-# Create a box plot of sepal length by species
+# Complete the code below and run the cell.
 
+# Your code here
+wide_data <- 
 ```
 
+#### Test Your Code (Exercise 2)
 
-Your graph should look something like this:
-![](distribution_of_sepal_length_by_species.png)
-If the picture is not rendered, visit https://github.com/UofTChem-Teaching/R4EnvChem-Exercises/blob/main/chapter%2015/distribution_of_sepal_length_by_species.png instead.
-
+```{r,purl=FALSE}
+library(testthat, quietly = TRUE)
+test_that("Using pivot_wider", {
+  expect_true(all(c("uptake", "conc") %in% colnames(wide_data)))
+})
+```
 
 ------------------------------------------------------------------------
 
-# Exercise 3: Scatterplot of Sepal Length vs Sepal Width
+# Exercise 3: Combined Use of pivot_longer and pivot_wider
 
-Let's create a scatterplot to visualize the relationship between sepal length (`Sepal.Length`) and sepal width (`Sepal.Width`). 
+**Your Task:**
 
--   Give your visualization an appropriate title.
--   Color the points by species to distinguish them.
--   Make sure to give axes correct labels.
+First, modify the `CO2` dataset by converting all columns except `Plant` into characters. Then, use `pivot_longer` to create a long format with columns for `Plant`, `variable`, and `value`. Following this, use `pivot_wider` to reshape this long data into a wide format where each `variable` becomes a column again, but keep `Plant` as the row identifiers. Assign the final output to `transformed_data`.
 
 ```{r}
-# Create a scatterplot of sepal length vs. sepal width
+# Complete the code below and run the cell.
 
+# Your code here
+transformed_data <- 
 ```
 
-Your graph should look something like this:
-![](sepal_length_vs_sepal_width.png)
-If the picture is not rendered, visit https://github.com/UofTChem-Teaching/R4EnvChem-Exercises/blob/main/chapter%2015/sepal_length_vs_sepal_width.png instead.
+#### Test Your Code (Exercise 3)
 
-------------------------------------------------------------------------
+```{r,purl=FALSE}
+library(testthat, quietly = TRUE)
 
-# Exercise 4: Petal Length Distribution Across Different Species
+# Original column names from CO2 dataset, except 'Plant'
+original_columns <- setdiff(names(CO2), "Plant")
 
-Create a histogram to visualize the distribution of petal lengths for each species in the iris dataset. 
-Try to do this with one code snippet instead of 3 separate snippets for each species.
+test_that("Combined Use of pivot_longer and pivot_wider", {
+  # Test if 'Plant' column is present
+  expect_true("Plant" %in% colnames(transformed_data))
 
--   Give your visualization an appropriate title.
--   Color by species to distinguish them.
--   Make sure to give axes correct labels.
--   Adjust the `binwidth` parameter to make your graph both informative and neat.
-
-```{r}
-# Create a histogram of petal lengths for each species
+  # Test if all other original columns are present in the transformed data
+  for (col in original_columns) {
+    expect_true(col %in% colnames(transformed_data))
+  }
+})
 
 ```
-
-Your graph should look something like this:
-![](petal_length_dist.png)
-
-If the picture is not rendered, visit https://github.com/UofTChem-Teaching/R4EnvChem-Exercises/blob/main/chapter%2015/petal_length_dist.png instead.
-
