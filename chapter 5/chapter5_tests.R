@@ -31,7 +31,7 @@ get_rmd_path <- function(folder_name, filename) {
 }
 
 # Specify the path to your Rmd file
-rmd_file_path <- get_rmd_path("chapter 5", "chapter5 2.Rmd")
+rmd_file_path <- get_rmd_path("chapter 5", "chapter5.Rmd")
 
 
 # Exercise 1: Saving R Objects
