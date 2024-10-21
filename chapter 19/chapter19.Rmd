@@ -20,7 +20,7 @@ In these exercises, you will be analyzing data collected from a study performed 
 # Run the cell.
 library(tidyverse)
 data <- read_csv("OPFR_concentration.csv", show_col_types = FALSE)
-DT::datatable(data)
+knitr::kable(data)
 ```
 
 ------------------------------------------------------------------------
